@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+<input id="num" type="numbers">
+<output id = "words">Number to words</output>
+<script>
+
+var elementInput = document.getElementById("num"); elementOutput = document.getElementById("words");
+var alpha = [" ","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+var singleDigit = ["zero","one","two","three","four","five","six","seven","eight","nine"];
+var doubleDigits = ["ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"];
+var tens = ["twenty","thirty", "fourty","fifty","sixty","seventy","eighty","ninty"];
+var values = ["hundred","thousand","lakh","crore","arab","kharab","neel"];
+
+var outputval;
+var numArray =[];
+
+elementInput.addEventListener("keyup", function (e) {
+    alpha.some(function(al){
+        if(e.key == al){
+            alert("ENTER ONLY NUMBERS")
+            elementInput.value = elementInput.value.slice(0,-1)
+        }
+    })
+
+    if(e.keyCode == 13 && elementInput.value != "") {
+        parsingNumber(e);
+    }
+
+})
+
+function parsingNumber() {
+
+    var inputVal = (parseFloat(elementInput.value)).toString();
+    var count = 0;
+
+    var y = inputVal.length;
+    for (var i = inputVal.length ; i > 0 ; i--) {
+            
+        if(count == "3") {
+            inputVal = (inputVal.slice(0,i) +","+ inputVal.slice(i,inputVal.length))
+            count = 1;
+        }
+        
+    count +=1;
+    }
+    console.log(inputVal);
+
+    var check = 0;
+
+    for (var i = 0 ; i < inputVal.length+1 ; i++) {
+        
+        if(inputVal.charAt(i) == "," || inputVal.charAt(i) == "") {
+            numArray.unshift(inputVal.slice(check,i))
+            check = i+1;
+        }
+    }
+    console.log(numArray)
+
+    count = 0;
+    check = 0;
+
+    numberToWords(numArray);
+};
+
+
+
+
+function numberToWords (numArray) {
+    numArray.map(function(e){
+
+        if (e.length == 1) {
+           console.log(e+" "+values[numArray.indexOf(e)])
+        } else if (e.length == 2) {
+            console.log(e+" "+values[numArray.indexOf(e)])
+
+        } else if (e.length == 3) {
+            console.log(e+" "+values[numArray.indexOf(e)])
+
+        };
+
+    })
+};
+
+
+
+     
+
+</script>
+    </body>
+</html>

@@ -68,19 +68,21 @@ function parsingNumber() {
 
 
 function numberToWords (numArray) {
+    var i = 0;
     numArray.map(function(e){
 
         if (e.length == 1) {
-           console.log(e+" "+values[numArray.indexOf(e)])
+           console.log(e+" "+values[i])
         } else if (e.length == 2) {
-            console.log(e+" "+values[numArray.indexOf(e)])
+            console.log(e+" "+values[i])
 
         } else if (e.length == 3) {
-            console.log(e+" "+values[numArray.indexOf(e)])
+            console.log(e+" "+values[i])
 
         };
-
+        i +=1;
     })
+    
 };
 
 

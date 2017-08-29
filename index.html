@@ -2,7 +2,7 @@
 <html>
     <head></head>
     <body>
-<input id="num" type="numbers">
+<input id="num" type="numbers"><br>
 <output id = "words">Number to words</output>
 <script>
 
@@ -11,10 +11,11 @@ var alpha = ["."," ","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o"
 var singleDigits = ["one","two","three","four","five","six","seven","eight","nine"];
 var doubleDigits = ["ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"];
 var tens = ["twenty","thirty", "fourty","fifty","sixty","seventy","eighty","ninty"];
-var values = ["","thousand","lakh","crore","arab","kharab","neel"];
+var values = ["","thousand","lakh","crore","arab","kharab","neel","padma","shankh","maha-shankh"];
 
-var outputval;
+var outputval = "";
 var numArray =[];
+var inputVal;
 
 elementInput.addEventListener("keyup", function (e) {
     alpha.some(function(al){
@@ -26,8 +27,10 @@ elementInput.addEventListener("keyup", function (e) {
 
     if(e.keyCode == 13 && elementInput.value != "") {
         parsingNumber(e);
+        elementOutput.innerHTML = inputVal + '<br>' + outputval;
+
         numArray = [];
-        elementInput.value= "";
+        elementInput.value = "";
     }
     
 
@@ -35,7 +38,7 @@ elementInput.addEventListener("keyup", function (e) {
 
 function parsingNumber() {
 
-    var inputVal = (parseFloat(elementInput.value)).toString();
+    inputVal = (parseFloat(elementInput.value)).toString();
     var count = 0;
 
     var y = inputVal.length;
@@ -55,26 +58,30 @@ function parsingNumber() {
     for (var i = 0 ; i < inputVal.length+1 ; i++) {
         
         if(inputVal.charAt(i) == "," || inputVal.charAt(i) == "") {
-            numArray.unshift((inputVal.slice(check,i)))
-            check = i+1;
+            numArray.unshift((inputVal.slice(check,i)));
+            check = i + 1;
         }
     }
     console.log(numArray)
 
     count = 0;
     check = 0;
-
+    if (numArray.length < 11) {
     numberToWords(numArray);
+    } else {
+        alert("Exceeded Max Value!");
+    }
 };
 
 
 
 
 function numberToWords (numArray) {
+
+
     var i = 0;
     numArray.map(function(e){
         e = (parseFloat(e)).toString();
-
         printWords(e,i);
         i +=1;
     })
@@ -86,13 +93,13 @@ function printWords(e,i) {
 
     if (e.length == 1 && e != 0) {
         
-	console.log(singleDigits[e-1],values[i]);
+	outputval = (singleDigits[e-1] + " " + values[i])  + " " + outputval ;
   
 }   else if (e.length == 2) {
 	if(e < 20) {
-		console.log(doubleDigits[e.charAt(1)],values[i]);
+		outputval = (doubleDigits[e.charAt(1)] + " " + values[i]) + " " + outputval ;
     } else {
-      	e.charAt(1) == 0 ? console.log(tens[e.charAt(0)-2],values[i]) : console.log(tens[e.charAt(0)-2]+" "+singleDigits[e.charAt(1)-1],values[i])  
+      	e.charAt(1) == 0 ? outputval = (tens[e.charAt(0)-2] + " " + values[i]) + " " + outputval : outputval = (tens[e.charAt(0)-2]+" "+singleDigits[e.charAt(1)-1]+" "+values[i]) + " " + outputval;
     } 
 
 
@@ -115,17 +122,11 @@ function printWords(e,i) {
             }
         
         }
-            lastChar == undefined ? console.log(firstChar) : console.log(firstChar+" "+lastChar)
+            lastChar == undefined ? outputval = (firstChar) + " " + outputval : outputval = (firstChar+" "+lastChar) + " " + outputval;
         
     };
 
 };
-
-
-
-
-
-
 
 
      
